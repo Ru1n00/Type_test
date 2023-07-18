@@ -34,6 +34,8 @@ class CompletedTest(models.Model):
     test = models.ForeignKey(Test, on_delete=models.CASCADE)
     speed = models.DecimalField(decimal_places=2, max_digits=5, default=0.00)
     accuracy = models.DecimalField(decimal_places=2, max_digits=5, default=0.00)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name_plural = 'Completed Tests'
