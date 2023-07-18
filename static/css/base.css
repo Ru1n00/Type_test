@@ -1,0 +1,50 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.my-container {
+  min-height: 250px;
+  max-width: 50vw;
+  padding: 30px;
+  margin: 0 auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.test-container {
+  min-height: 250px;
+  border: 1px solid black;
+  padding: 10px;
+  font-size: 20px;
+}
+
+.type {
+  margin: 0 auto;
+  height: 28px;
+  width: 500px;
+}
+.type input {
+  width: 100%;
+  height: 28px;
+  text-align: center;
+  padding: 0 20%;
+}
+
+.active-word {
+  background-color: #C2FFD2;
+}
+
+.wrong {
+  background: #f8e4f8 !important;
+  color: black !important;
+}
+
+.result {
+  display: none;
+}
+
+.show {
+  display: block;
+}/*# sourceMappingURL=base.css.map */
