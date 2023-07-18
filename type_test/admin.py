@@ -10,3 +10,8 @@ class ProfileAdmin(admin.ModelAdmin):
 
 class CompletedTestAdmin(admin.ModelAdmin):
     list_display = ('id', 'played_by', 'test', 'speed', 'accuracy', 'created', 'updated')
+
+
+admin.site.register(Profile, ProfileAdmin)
+admin.site.register(Test, TestAdmin)
+admin.site.register(CompletedTest, CompletedTestAdmin)
