@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, HttpResponse
 from django.http.response import JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, logout, authenticate
 
 from .models import Test, CompletedTest, Profile
 
@@ -91,3 +93,25 @@ def post_score(request):
         return JsonResponse('ok posted successfully :)', safe=False)
 
 
+# log in view
+def sign_in(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, request.POST)
+
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user != None:
+                login(request, user)
+                return redirect('type_test:home')
+            return HttpResponse('signed in')
+
+    form = AuthenticationForm()
+    return render(request, 'type_test/login.html', {'form':form})
+
+
+# log out
+def sign_out(request):
+    logout(request)
+    return redirect('type_test:home')
