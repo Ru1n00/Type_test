@@ -34,11 +34,11 @@
                     <a class="nav-link fs-4 fw-bold" href="#">{{request.user}}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link fs-4 fw-bold" href="#">Log Out</a>
+                    <a class="nav-link fs-4 fw-bold" href="{% url 'type_test:sign-out' %}">Log Out</a>
                 </li>
               {% else %}
                 <li class="nav-item">
-                  <a class="nav-link fs-4 fw-bold" href="#">Log In</a>
+                  <a class="nav-link fs-4 fw-bold" href="{% url 'type_test:sign-in' %}">Log In</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link fs-4 fw-bold" href="#">Sign Up</a>
