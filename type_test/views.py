@@ -12,6 +12,7 @@ from .forms import SignUpForm
 
 import random
 import json
+from decimal import Decimal
 
 
 def index(request):
@@ -87,6 +88,8 @@ def post_score(request):
         if body['speed'] != None and body['accuracy'] != None:
             # played_by = request.user.profile
             played_by.match_played += 1
+            played_by.avg_speed = (played_by.avg_speed * (played_by.match_played-1) + Decimal(body['speed'])) / played_by.match_played
+            played_by.avg_accuracy = (played_by.avg_accuracy * (played_by.match_played-1) + Decimal(body['accuracy'])) / played_by.match_played
             played_by.save()
             test = body['test_id']
             test = Test.objects.get(id=test)
