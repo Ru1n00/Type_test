@@ -100,13 +100,13 @@ def post_score(request):
 # sign up view
 def sign_up(request):
     if request.method == 'POST':
-        form = SignUpForm(request.POST)
+        form = SignUpForm(request.POST, request.FILES or None)
 
         if form.is_valid():
             username = form.cleaned_data.get('username')
             name = form.cleaned_data.get('name')
             email = form.cleaned_data.get('email')
-            image = form.cleaned_data.get('image')
+            image = form.files.get('image')
             password1 = form.cleaned_data.get('password1')
             password2 = form.cleaned_data.get('password2')
             if password1 != password2:
