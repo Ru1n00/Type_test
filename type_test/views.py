@@ -20,7 +20,7 @@ def index(request):
 
 
 # api to get new tesst 
-def test_api(request):
+def get_test(request):
     if request.method == 'POST' or request.method == "GET":
         tests_count = Test.objects.count()
         while True:
