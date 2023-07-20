@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.auth import  password_validation
 
 from .models import Test, CompletedTest, Profile
 from .forms import SignUpForm
@@ -108,11 +110,22 @@ def sign_up(request):
             password1 = form.cleaned_data.get('password1')
             password2 = form.cleaned_data.get('password2')
             if password1 != password2:
-                return HttpResponse('passwords do not match')
+                # return HttpResponse('passwords do not match')
+                messages.error(request, 'passwords do not match')
+                return render(request, 'type_test/signup.html', {'form':form})
+            try:
+                password_validation.validate_password(password1)
+            except:
+                # return HttpResponse('password is too weak')
+                messages.error(request, 'password is too weak')
+                return render(request, 'type_test/signup.html', {'form':form})
+
             try:
                 user = User.objects.create_user(username=username, email=email, password=password1)
             except:
-                return HttpResponse('username already exists')
+                # return HttpResponse('username already exists')
+                messages.error(request, 'username already exists')
+                return render(request, 'type_test/signup.html', {'form':form})
             user.save()
 
             profile = Profile.objects.create(user=user, name=name, email=email, image=image)
