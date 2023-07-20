@@ -6,7 +6,7 @@ class TestAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'author', 'added_by', 'created', 'updated')
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'name', 'email', 'avg_speed', 'avg_accuracy', 'match_played', 'created', 'updated')
+    list_display = ('id', 'user', 'name', 'email', 'image', 'avg_speed', 'avg_accuracy', 'match_played', 'created', 'updated')
 
 class CompletedTestAdmin(admin.ModelAdmin):
     list_display = ('id', 'played_by', 'test', 'speed', 'accuracy', 'created', 'updated')
