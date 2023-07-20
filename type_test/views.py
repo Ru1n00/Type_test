@@ -3,8 +3,10 @@ from django.http.response import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.models import User
 
 from .models import Test, CompletedTest, Profile
+from .forms import SignUpForm
 
 import random
 import json
@@ -91,6 +93,37 @@ def post_score(request):
             print(played_by, test, speed, accuracy)
             CompletedTest.objects.create(played_by=played_by, test=test, speed=speed, accuracy=accuracy)
         return JsonResponse('ok posted successfully :)', safe=False)
+
+    
+# sign up view
+def sign_up(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            name = form.cleaned_data.get('name')
+            email = form.cleaned_data.get('email')
+            image = form.cleaned_data.get('image')
+            password1 = form.cleaned_data.get('password1')
+            password2 = form.cleaned_data.get('password2')
+            if password1 != password2:
+                return HttpResponse('passwords do not match')
+            try:
+                user = User.objects.create_user(username=username, email=email, password=password1)
+            except:
+                return HttpResponse('username already exists')
+            user.save()
+
+            profile = Profile.objects.create(user=user, name=name, email=email, image=image)
+
+            if user != None:
+                login(request, user)
+                return redirect('type_test:home')
+            return HttpResponse('signed up')
+    
+    form = SignUpForm()
+    return render(request, 'type_test/signup.html', {'form':form})
 
 
 # log in view
